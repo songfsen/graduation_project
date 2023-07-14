@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>商家信息页面</title>
+{% endblock %}
+
+{% block style %}
+<style>
+    button {
+        width: 200px; /*设置按钮宽度*/
+        height: 30px; /*设置按钮高度*/
+        color: white; /*字体颜色*/
+        background-color: #b9def0; /*按钮背景颜色*/
+        border-radius: 3px; /*让按钮变得圆滑一点*/
+        border-width: 0; /*消去按钮丑的边框*/
+        margin: 0;
+        outline: none; /*取消轮廓*/
+        font-family: KaiTi, serif; /*字体设置为楷体*/
+        font-size: 17px; /*设置字体大小*/
+        text-align: center; /*字体居中*/
+        cursor: pointer; /*设置鼠标箭头手势*/
+    }
+
+    button:hover { /*鼠标移动时的颜色变化*/
+        background-color: antiquewhite;
+    }
+
+    tr {
+        display: block;
+        margin: 30px 0;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<h2 style="text-align: center">{{ shop_name }}的商家信息页面</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div id="index_left" class="col-md-6 left">
+        {% if picture %}
+        <div>
+            <img style="max-height: 100%" class="img-responsive img-rabbit" src="{{MEDIA_URL}}{{ picture }}" alt="">
+        </div>
+        {% else %}
+        <h5 class="col-md-4">暂无背景图</h5>
+        {% endif %}
+        <!-- avatar -->
+        <button style="display: block;margin:0 auto"><input type="file" name="picture" id="avatar"></button>
+    </div>
+    <div id="index_right" class="col-md-6 text-center right">
+        <div style="position: absolute;top: 120px;left: 30px;text-align: center">
+
+            <table>
+                <tr>
+                    <td>店铺名称：</td>
+                    <td>
+                        <input name="shop_name" type="text" value="{{ shop_name }}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>位置：</td>
+                    <td>
+                        <input name="location" type="text" value="{{ location }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>邮箱：</td>
+                    <td>
+                        {{email}}
+<!--                        <input name="email" type="text" value="{{ email }}">-->
+                    </td>
+                </tr>
+                <tr>
+                    <td>联系电话：</td>
+                    <td>
+                        <input name="phone_number" type="text" value="{{ phone_number }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>类型：</td>
+                    <td>
+                        <input name="type" type="text" value="{{ type }}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>推荐：</td>
+                    <td>
+                        <input name="recommend" type="text" value="{{ recommend }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>特色：</td>
+                    <td>
+                        <input name="special" type="text" value="{{ special }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>营业时间：</td>
+                    <td>
+                        <input name="business_hours" type="text" value="{{ business_hours }}">
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <button type="submit" value="提交">提交</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+

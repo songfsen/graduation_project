@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>联通消息中心</h1>
+<ul>
+    {% for item in data_list %}
+        <li> {{item.news_title}}  发布时间{{item.post_time}}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

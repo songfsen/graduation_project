@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}
+<title>商家推荐系统主页</title>
+{% endblock %}
+
+
+{% block style %}
+<style>
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+<!--Container-->
+
+<a href="/app01/insert/">插入数据</a>
+
+<a href="/app01/all/collections">收藏记录</a>
+
+{% for u in contacts %}
+<div style="position: relative;background-color: rgb(240, 240, 240)">
+
+
+    {% if u.picture %}
+    <div>
+        <img style="position: absolute;left: 60%;width: 180px;height: 180px" class="img-responsive img-rabbit"
+             src="{{MEDIA_URL}}{{ u.picture }}"
+             alt="">
+    </div>
+    {% else %}
+    <h5 class="col-md-4">暂无背景图</h5>
+    {% endif %}
+
+
+    <h2><a href="/app01/merchant/info/?id={{u.id}}">{{ u.shop_name }}</a></h2>
+
+
+    <div style="margin-top: 20px">
+
+        <span>均分：{{u.average_score}}</span>
+        <span>人均：{{u.average_price}}元</span>
+        <span id="comment_score">
+                <span class="item">口味：{{u.taste_score}}</span>
+                <span class="item">环境：{{u.environment_score}}</span>
+                <span class="item">服务：{{u.server_score}}</span>
+                </span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span>地址：</span>
+        <span>{{u.location}}</span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span class="info-name">联系电话：{{u.phone_number}}</span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span>营业时间：</span>
+        <span>{{u.business_hours}}</span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span class="info-name">推荐：</span>
+        <span class="info-name">{{u.recommend}}</span>
+    </div>
+
+</div>
+{% endfor %}
+
+
+<div class="navigation" style="text-align: center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+
+            {% if contacts.has_previous %}
+            <li><a href="/app01/index/?page={{ contacts.previous_page_number }}">上一页</a></li>
+            {% endif %}
+
+            {% for pg in contacts.paginator.page_range %}
+            {% if contacts.number == pg %}
+            <li class="active"><a href="/app01/index/?page={{ pg }}">{{ pg }}</a></li>
+            {% else %}
+            <li><a href="/app01/index/?page={{ pg }}">{{ pg }}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if contacts.has_next %}
+            <li><a href="/app01/index/?page={{ contacts.next_page_number }}">下一页</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+
+{% endblock %}
+
+

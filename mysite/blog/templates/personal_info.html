@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>个人信息页面</title>
+{% endblock %}
+
+{% block style %}
+<style>
+    button {
+        width: 200px; /*设置按钮宽度*/
+        height: 30px; /*设置按钮高度*/
+        color: white; /*字体颜色*/
+        background-color: #b9def0; /*按钮背景颜色*/
+        border-radius: 3px; /*让按钮变得圆滑一点*/
+        border-width: 0; /*消去按钮丑的边框*/
+        margin: 0;
+        outline: none; /*取消轮廓*/
+        font-family: KaiTi, serif; /*字体设置为楷体*/
+        font-size: 17px; /*设置字体大小*/
+        text-align: center; /*字体居中*/
+        cursor: pointer; /*设置鼠标箭头手势*/
+    }
+
+    button:hover { /*鼠标移动时的颜色变化*/
+        background-color: antiquewhite;
+    }
+
+    tr {
+        display: block;
+        margin: 30px 0;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<h2 style="text-align: center">{{ user_name }}的个人信息页面</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div id="index_left" class="col-md-6 left">
+        {% if avatar %}
+        <div>
+            <img style="max-height: 100%" class="img-responsive img-rabbit" src="{{MEDIA_URL}}{{ avatar }}" alt="">
+        </div>
+        {% else %}
+        <h5 class="col-md-4">暂无背景图</h5>
+        {% endif %}
+        <!-- avatar -->
+        <button style="display: block;margin:0 auto"><input type="file" name="avatar" id="avatar"></button>
+    </div>
+    <div id="index_right" class="col-md-6 text-center right">
+        <div style="position: absolute;top: 120px;left: 30px;text-align: center">
+
+            <table>
+                <tr>
+                    <td>昵称：</td>
+                    <td>
+                        <input name="username" type="text" value="{{ user_name }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>性别：</td>
+                    <td>
+                        男<input type="radio" value="male" name="sex"> <!--checked设置默认选中-->
+                        女<input type="radio" value="female" checked="checked" name="sex">
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机号码：</td>
+                    <td>
+                        <input name="phone" type="text" value="{{ phone }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>邮箱：</td>
+                    <td>
+                        <input name="email" type="text" value="{{ email }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>简介：</td>
+                    <td>
+                        <input name="introduce" type="text" value="{{ introduce }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>创建时间：</td>
+                    <td>
+                        {{ create_time }}
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <button type="submit" value="提交">提交</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!--{% if messages %}-->
+<!--        <script type="text/javascript">-->
+<!--            {% for msg in messages %}-->
+<!--                alert('{{msg.message}}');-->
+<!--            {% endfor %}-->
+<!--        </script>>-->
+<!--{% endif %}-->
+
+
+{% endblock %}
+
+

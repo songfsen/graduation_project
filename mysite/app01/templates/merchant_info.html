@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}
+<title>商家信息主页</title>
+{% endblock %}
+
+{% block style %}
+<style>
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="position: relative;background-color: rgb(240, 240, 240);margin-top: 100px">
+
+
+    {% if picture %}
+    <div>
+        <img style="position: absolute;left: 70%;top: 10%;width: 180px;height: 190px" class="img-responsive img-rabbit"
+             src="{{MEDIA_URL}}{{ picture }}"
+             alt="">
+    </div>
+    {% else %}
+    <h5 class="col-md-4">暂无背景图</h5>
+    {% endif %}
+
+
+    <h1 class="shop-name"> {{ name }}</h1>
+
+    <div style="margin-top: 20px">
+
+        <span>均分：{{average_score}}</span>
+        <span>人均：{{average_price}}元</span>
+        <span id="comment_score">
+                <span class="item">口味：{{taste_score}}</span>
+                <span class="item">环境：{{environment_score}}</span>
+                <span class="item">服务：{{server_score}}</span>
+                </span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span>地址：</span>
+        <span>{{location}}</span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span class="info-name">联系电话：{{phone_number}}</span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span>营业时间：</span>
+        <span>{{business_hours}}</span>
+    </div>
+
+    <div style="margin-top: 8px">
+        <span class="info-name">推荐：</span>
+        <span class="info-name">{{recommend}}</span>
+    </div>
+
+    {% if request.session.identity == 'merchant' %}
+    <div style="margin-top: 8px">
+        <span>
+        <button class="btn btn-success" type="button"><a href="/app01/merchant/info/edit/?merchant_id={{merchant_id}}">编辑信息</a></button>
+        </span>
+    </div>
+    {% endif %}
+
+    {% if request.session.identity == 'user' %}
+    <div style="margin-top: 8px">
+        <span>被{{collect_num}}人收藏</span>
+        <span>
+        <button class="btn btn-success" type="button"><a href="/app01/merchant/collect/?merchant_id={{merchant_id}}">收藏商家</a></button>
+        </span>
+        <span>
+        <button class="btn btn-danger" type="button"><a
+                href="#">投诉</a></button>
+        </span>
+    </div>
+    {% endif %}
+</div>
+
+<div style="margin-top: 20px"></div>
+{% if request.session.identity == 'user' %}
+<div style="margin-top: 20px;background-color: rgb(240, 240, 240);">
+
+    <form class='form-login' action="/app01/merchant/info/?id={{merchant_id}}" method="post">
+        {% csrf_token %}
+        <div>
+            <div>
+                <textarea name="content" rows="5" cols="60" id="comment_content"></textarea>
+            </div>
+            <div style="margin-top: 5px">
+                <span>
+                    味道评分：
+                    <select name="taste">
+                    <option value="1">1分</option>
+                    <option value="2">2分</option>
+                    <option value="3">3分</option>
+                    <option value="4">4分</option>
+                    <option value="5">5分</option>
+                </select>&nbsp;&nbsp;
+                </span>
+                <span>
+                    服务评分：
+                    <select name="server">
+                    <option value="1">1分</option>
+                    <option value="2">2分</option>
+                    <option value="3">3分</option>
+                    <option value="4">4分</option>
+                    <option value="5">5分</option>
+                </select>&nbsp;&nbsp;
+                </span>
+                <span>
+                    环境评分：
+                    <select name="environment">
+                    <option value="1">1分</option>
+                    <option value="2">2分</option>
+                    <option value="3">3分</option>
+                    <option value="4">4分</option>
+                    <option value="5">5分</option>
+                </select>
+                </span>
+            </div>
+
+            <div style="margin-top: 5px">
+                均价：
+                <input type="text" style="width: 60px" name="average_price">
+                元
+            </div>
+
+            <div style="margin-top: 5px">
+                <button type="submit" class="btn bg-primary">发表评论</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+{% endif %}
+
+
+<div style="margin-top: 20px;background-color: rgb(240, 240, 240);">
+
+    <div><h3>&nbsp&nbsp用户评论信息</h3></div>
+    {% for i in comment_queryset %}
+    <div style="margin-top: 10px">
+
+        <div>
+            <span style="margin: 13px">评论用户：{{i.comment_auther}}</span>
+            <span>味道：{{i.taste_score}}分  服务：{{i.server_score}}分  环境：{{i.environment_score}}分</span>
+        </div>
+        <div>
+            <span style="margin: 13px">{{i.comment_content}}</span>
+        </div>
+        <div>
+            <span style="margin: 13px">发表时间：{{i.publish_time}}</span>
+            <!--            <span>{{i.commented_merchant}}</span>-->
+        </div>
+
+    </div>
+    {% endfor %}
+
+
+</div>
+
+
+{% endblock %}

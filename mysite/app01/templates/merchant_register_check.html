@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}
+<title>商户注册验证</title>
+{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        /*background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat;*/
+        background-size: 100% 130%;
+    }
+
+    #login_box {
+        width: 38%;
+        height: 400px;
+        background-color: #00000060;
+        margin: auto;
+        margin-top: 13%;
+        text-align: center;
+        border-radius: 10px;
+        padding: 50px 50px;
+    }
+
+    h2 {
+        color: #ffffff90;
+        margin-top: 5%;
+    }
+
+    #input-box {
+        margin-top: 5%;
+    }
+
+    /*span {*/
+    /*    color: #fff;*/
+    /*}*/
+
+    input {
+        border: 0;
+        width: 50%;
+        font-size: 15px;
+        color: #fff;
+        background: transparent;
+        border-bottom: 2px solid #fff;
+        padding: 5px 10px;
+        outline: none;
+        margin-top: 10px;
+    }
+
+    button {
+        margin-top: 50px;
+        width: 40%;
+        height: 30px;
+        border-radius: 10px;
+        border: 0;
+        color: #fff;
+        text-align: center;
+        line-height: 30px;
+        font-size: 15px;
+        background-image: linear-gradient(to right, #30cfd0, #330867);
+    }
+
+    #sign_up {
+        margin-top: 45%;
+        margin-left: 60%;
+    }
+
+    /*a {*/
+    /*    color: #b94648;*/
+    /*}*/
+</style>
+{% endblock %}
+
+
+{% block content %}
+<h2>app01主页</h2>
+
+<form class='form-login' action="/app01/merchant/register/check/" method="post">
+    {% csrf_token %}
+    <div id="login_box">
+        <h2>MerchantRegister</h2>
+        <div class="input_box">
+            <table>
+                <tr>
+                    <td>{{form.check_code.label_tag}}</td>
+                    <td>{{form.check_code}}</td>
+                </tr>
+
+            </table>
+
+            <button type="submit">提交</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
