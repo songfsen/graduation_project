@@ -1,0 +1,1 @@
+terminal："cmd" /k "E:\Ending_Software\venv\Scripts\activate.bat"
